@@ -1,0 +1,1112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>KidGrid — Feature Overview</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Fraunces:ital,wght@0,300;0,600;0,700;1,300;1,600&display=swap" rel="stylesheet"/>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --navy:      #0a1628;
+    --navyMid:   #132040;
+    --navyLight: #1e3358;
+    --lime:      #c4f135;
+    --limeDeep:  #8fb820;
+    --white:     #ffffff;
+    --offwhite:  #f4f6f0;
+    --slate:     #6b7e9b;
+    --slateLight:#9aaabb;
+    --coral:     #ff6b4a;
+    --gold:      #f5c842;
+    --sky:       #4ab8e8;
+    --mint:      #4ecba0;
+    --muted:     #8899aa;
+  }
+
+  body {
+    background: var(--navy);
+    font-family: 'Nunito', sans-serif;
+    color: var(--white);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    padding: 56px 48px 36px;
+    text-align: center;
+    position: relative;
+  }
+
+  .hero-eyebrow {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 900;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--lime);
+    margin-bottom: 18px;
+  }
+
+  .hero-title {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(36px, 6vw, 64px);
+    font-weight: 300;
+    line-height: 1.1;
+    color: var(--white);
+    margin-bottom: 18px;
+  }
+
+  .hero-title em { font-style: italic; color: var(--lime); }
+
+  .hero-sub {
+    font-size: 16px;
+    color: rgba(255,255,255,0.5);
+    font-weight: 600;
+    max-width: 560px;
+    margin: 0 auto 32px;
+    line-height: 1.7;
+  }
+
+  .hero-pills {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 52px;
+  }
+
+  .hero-pill {
+    font-size: 12px;
+    font-weight: 800;
+    padding: 7px 16px;
+    border-radius: 20px;
+    border: 1px solid rgba(255,255,255,0.15);
+    color: rgba(255,255,255,0.6);
+  }
+
+  .hero-pill.accent {
+    background: var(--lime);
+    color: var(--navy);
+    border-color: var(--lime);
+  }
+
+  /* ── TAGLINE STRIP ── */
+  .tagline-strip {
+    display: flex;
+    border-top: 1px solid rgba(255,255,255,0.06);
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    margin-bottom: 40px;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .tagline-strip::-webkit-scrollbar { display: none; }
+
+  .tagline-item {
+    flex: 1;
+    min-width: 80px;
+    padding: 20px 12px;
+    text-align: center;
+    border-right: 1px solid rgba(255,255,255,0.06);
+    cursor: pointer;
+    transition: background 0.2s;
+    border-bottom: 2px solid transparent;
+  }
+
+  .tagline-item:last-child { border-right: none; }
+  .tagline-item:hover { background: rgba(255,255,255,0.03); }
+  .tagline-item.active { border-bottom-color: var(--item-color, var(--lime)); }
+
+  .tagline-icon { font-size: 22px; margin-bottom: 6px; }
+
+  .tagline-label {
+    font-size: 10px;
+    font-weight: 800;
+    color: rgba(255,255,255,0.4);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: color 0.2s;
+  }
+
+  .tagline-item.active .tagline-label { color: var(--item-color, var(--lime)); }
+
+  /* ── FEATURE NAV ── */
+  .feature-nav {
+    display: flex;
+    gap: 6px;
+    justify-content: center;
+    flex-wrap: wrap;
+    padding: 0 24px 40px;
+  }
+
+  .feature-nav-btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 800;
+    cursor: pointer;
+    border: 2px solid rgba(255,255,255,0.1);
+    color: rgba(255,255,255,0.45);
+    background: transparent;
+    font-family: 'Nunito', sans-serif;
+    transition: all 0.2s;
+  }
+
+  .feature-nav-btn:hover {
+    border-color: rgba(255,255,255,0.25);
+    color: rgba(255,255,255,0.7);
+  }
+
+  .feature-nav-btn.active {
+    color: var(--navy);
+    border-color: transparent;
+  }
+
+  /* ── FEATURE PANEL ── */
+  .feature-panel {
+    margin: 0 24px 48px;
+    border-radius: 32px;
+    overflow: hidden;
+    position: relative;
+    min-height: 520px;
+    display: flex;
+    transition: background 0.4s ease;
+  }
+
+  .panel-deco1 {
+    position: absolute;
+    top: -80px; right: 180px;
+    width: 320px; height: 320px;
+    border-radius: 50%;
+    pointer-events: none;
+    transition: background 0.4s;
+  }
+
+  .panel-deco2 {
+    position: absolute;
+    bottom: -60px; left: -60px;
+    width: 240px; height: 240px;
+    border-radius: 50%;
+    pointer-events: none;
+    transition: background 0.4s;
+  }
+
+  .panel-left {
+    flex: 1;
+    padding: 52px 48px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+    z-index: 1;
+  }
+
+  .panel-right {
+    width: 260px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 32px;
+    flex-shrink: 0;
+    position: relative;
+  }
+
+  .panel-right::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.25);
+  }
+
+  .panel-content {
+    animation: fadeUp 0.35s ease both;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .feature-eyebrow {
+    font-size: 11px;
+    font-weight: 900;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+
+  .feature-headline {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(24px, 3vw, 38px);
+    font-weight: 600;
+    line-height: 1.15;
+    color: var(--white);
+    margin-bottom: 16px;
+  }
+
+  .feature-sub {
+    font-size: 14px;
+    color: rgba(255,255,255,0.55);
+    font-weight: 600;
+    line-height: 1.7;
+    margin-bottom: 28px;
+    max-width: 480px;
+  }
+
+  .bullets {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 32px;
+  }
+
+  .bullet {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 13px;
+    font-weight: 700;
+    color: rgba(255,255,255,0.75);
+    cursor: pointer;
+    transition: all 0.15s;
+    padding: 6px 10px;
+    border-radius: 10px;
+    user-select: none;
+  }
+
+  .bullet:hover { background: rgba(255,255,255,0.05); color: white; }
+
+  .bullet.checked {
+    color: rgba(255,255,255,0.35);
+    text-decoration: line-through;
+  }
+
+  .bullet-icon {
+    width: 28px;
+    height: 28px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    flex-shrink: 0;
+    background: rgba(255,255,255,0.08);
+    transition: background 0.2s;
+  }
+
+  .stat-block {
+    display: inline-flex;
+    align-items: center;
+    gap: 16px;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 16px;
+    padding: 14px 20px;
+  }
+
+  .stat-val {
+    font-family: 'Fraunces', serif;
+    font-size: 32px;
+    font-weight: 700;
+    line-height: 1;
+  }
+
+  .stat-lbl {
+    font-size: 12px;
+    color: rgba(255,255,255,0.45);
+    font-weight: 600;
+    max-width: 140px;
+    line-height: 1.4;
+  }
+
+  /* ── MINI PHONE ── */
+  .mini-phone {
+    width: 200px;
+    border-radius: 32px;
+    background: #111;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    font-family: 'Nunito', sans-serif;
+    position: relative;
+    z-index: 1;
+    box-shadow: 0 24px 60px rgba(0,0,0,0.5);
+    transition: box-shadow 0.4s;
+  }
+
+  .phone-status {
+    padding: 8px 14px 6px;
+    display: flex;
+    justify-content: space-between;
+    font-size: 9px;
+    font-weight: 700;
+    color: rgba(255,255,255,0.45);
+  }
+
+  .phone-header {
+    padding: 8px 14px 12px;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+  }
+
+  .phone-header-title {
+    font-size: 11px;
+    font-weight: 800;
+    margin-bottom: 2px;
+  }
+
+  .phone-header-sub {
+    font-size: 10px;
+    font-weight: 700;
+    color: rgba(255,255,255,0.9);
+    margin-bottom: 2px;
+  }
+
+  .phone-header-meta {
+    font-size: 9px;
+    color: rgba(255,255,255,0.4);
+    font-weight: 600;
+  }
+
+  .phone-body {
+    flex: 1;
+    background: #0e0e12;
+    padding: 8px 10px;
+    overflow: hidden;
+    min-height: 280px;
+  }
+
+  .phone-card {
+    background: #18181f;
+    border-radius: 10px;
+    padding: 8px 10px;
+    margin-bottom: 6px;
+    display: flex;
+    gap: 8px;
+    align-items: flex-start;
+  }
+
+  .phone-card-emoji { font-size: 18px; flex-shrink: 0; margin-top: 2px; }
+
+  .phone-card-name {
+    font-size: 10px;
+    font-weight: 800;
+    color: white;
+    margin-bottom: 2px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .phone-card-meta {
+    font-size: 8px;
+    color: #888;
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+
+  .phone-badges { display: flex; gap: 4px; flex-wrap: wrap; }
+
+  .phone-badge {
+    font-size: 8px;
+    font-weight: 800;
+    padding: 1px 5px;
+    border-radius: 4px;
+  }
+
+  .phone-pipeline {
+    display: flex;
+    gap: 4px;
+    margin-bottom: 8px;
+    flex-wrap: wrap;
+  }
+
+  .phone-pipe-chip {
+    font-size: 7.5px;
+    font-weight: 800;
+    background: #222;
+    color: #aaa;
+    padding: 3px 6px;
+    border-radius: 8px;
+    white-space: nowrap;
+  }
+
+  .phone-reg-card {
+    background: #18181f;
+    border-radius: 10px;
+    padding: 8px 10px;
+    margin-bottom: 6px;
+  }
+
+  .phone-reg-top { display: flex; gap: 6px; align-items: center; margin-bottom: 4px; }
+  .phone-reg-emoji { font-size: 14px; }
+  .phone-reg-name { font-size: 9.5px; font-weight: 800; color: white; }
+  .phone-reg-child { font-size: 8px; color: #888; font-weight: 600; }
+  .phone-reg-status { font-size: 8px; font-weight: 800; padding: 2px 5px; border-radius: 5px; margin-left: auto; }
+  .phone-reg-pay { font-size: 8px; font-weight: 700; }
+
+  .phone-rundown-card {
+    background: #18181f;
+    border-radius: 12px;
+    padding: 10px 12px;
+    margin-bottom: 8px;
+  }
+
+  .phone-rundown-top { display: flex; gap: 8px; align-items: center; margin-bottom: 6px; }
+  .phone-rundown-emoji { font-size: 22px; }
+  .phone-rundown-name { font-size: 10px; font-weight: 800; color: white; }
+  .phone-rundown-time { font-size: 9px; font-weight: 700; }
+  .phone-rundown-alert { font-size: 9px; font-weight: 700; border-radius: 6px; padding: 5px 8px; margin-bottom: 6px; }
+  .phone-pack-items { display: flex; flex-wrap: wrap; gap: 4px; margin-bottom: 6px; }
+  .phone-pack-item { font-size: 8px; font-weight: 700; background: #222; color: #ccc; padding: 2px 6px; border-radius: 6px; }
+  .phone-carpool { font-size: 8.5px; font-weight: 700; color: #888; }
+  .phone-meal-card { background: #1a1800; border: 1px solid rgba(245,200,66,0.2); border-radius: 10px; padding: 7px 10px; }
+  .phone-meal-text { font-size: 8.5px; font-weight: 700; }
+
+  .phone-member {
+    background: #18181f;
+    border-radius: 10px;
+    padding: 8px 10px;
+    margin-bottom: 6px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .phone-member-av {
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px; flex-shrink: 0;
+  }
+
+  .phone-member-name { font-size: 10px; font-weight: 800; color: white; }
+  .phone-member-role { font-size: 8px; color: #888; font-weight: 600; }
+  .phone-member-notif { font-size: 8px; font-weight: 800; margin-left: auto; }
+
+  .phone-volunteer {
+    border-radius: 10px;
+    padding: 7px 10px;
+    margin-bottom: 8px;
+    font-size: 8.5px;
+    font-weight: 700;
+  }
+
+  .phone-roster-row {
+    background: #18181f;
+    border-radius: 10px;
+    padding: 7px 10px;
+    margin-bottom: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .phone-roster-name { font-size: 10px; font-weight: 800; color: white; }
+  .phone-roster-age { font-size: 8px; color: #888; }
+  .phone-roster-status { font-size: 8px; font-weight: 800; padding: 2px 6px; border-radius: 5px; }
+
+  .phone-resource {
+    background: #18181f;
+    border-radius: 10px;
+    padding: 8px 10px;
+    margin-bottom: 6px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .phone-resource-emoji { font-size: 16px; }
+  .phone-resource-name { font-size: 9.5px; font-weight: 800; color: white; margin-bottom: 2px; }
+  .phone-resource-meta { font-size: 8px; color: #888; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .phone-resource-badge { font-size: 8px; font-weight: 800; padding: 2px 6px; border-radius: 5px; margin-left: auto; white-space: nowrap; }
+
+  .phone-plan {
+    border-radius: 12px;
+    padding: 10px 12px;
+    margin-bottom: 8px;
+  }
+
+  .phone-plan-top { display: flex; justify-content: space-between; align-items: flex-start; }
+  .phone-plan-name { font-size: 10px; font-weight: 800; margin-bottom: 2px; }
+  .phone-plan-desc { font-size: 8px; max-width: 110px; font-weight: 600; }
+  .phone-plan-price { font-size: 14px; font-weight: 900; }
+
+  .phone-bar-row { margin-bottom: 10px; }
+  .phone-bar-header { display: flex; justify-content: space-between; margin-bottom: 3px; }
+  .phone-bar-label { font-size: 8.5px; font-weight: 700; color: #aaa; }
+  .phone-bar-val { font-size: 8.5px; font-weight: 900; }
+  .phone-bar-track { height: 5px; background: #222; border-radius: 3px; overflow: hidden; }
+  .phone-bar-fill { height: 100%; border-radius: 3px; }
+
+  .phone-nav {
+    background: #0e0e12;
+    border-top: 1px solid #222;
+    padding: 6px 0 10px;
+    display: flex;
+    justify-content: space-around;
+  }
+
+  .phone-nav-icon { font-size: 14px; opacity: 0.35; }
+  .phone-nav-icon.active-nav { opacity: 1; }
+
+  /* ── PROGRESS DOTS ── */
+  .progress-row {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+    justify-content: center;
+    padding-bottom: 48px;
+  }
+
+  .progress-dot {
+    height: 4px;
+    border-radius: 2px;
+    cursor: pointer;
+    transition: all 0.3s;
+    background: rgba(255,255,255,0.2);
+    width: 8px;
+  }
+
+  .progress-dot.active { width: 28px; }
+
+  /* ── CTA ── */
+  .cta-section {
+    background: var(--lime);
+    margin: 0 24px 48px;
+    border-radius: 28px;
+    padding: 48px 52px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 32px;
+    flex-wrap: wrap;
+  }
+
+  .cta-title {
+    font-family: 'Fraunces', serif;
+    font-size: 32px;
+    font-weight: 600;
+    color: var(--navy);
+    line-height: 1.2;
+    margin-bottom: 8px;
+  }
+
+  .cta-sub { font-size: 14px; color: var(--navyMid); font-weight: 600; opacity: 0.7; }
+
+  .cta-btns { display: flex; gap: 10px; flex-wrap: wrap; }
+
+  .cta-btn-dark {
+    background: var(--navy);
+    color: var(--lime);
+    border: none;
+    border-radius: 14px;
+    padding: 14px 28px;
+    font-size: 14px;
+    font-weight: 900;
+    font-family: 'Nunito', sans-serif;
+    cursor: pointer;
+    transition: opacity 0.2s;
+  }
+  .cta-btn-dark:hover { opacity: 0.85; }
+
+  .cta-btn-outline {
+    background: transparent;
+    color: var(--navy);
+    border: 2px solid var(--navy);
+    border-radius: 14px;
+    padding: 14px 28px;
+    font-size: 14px;
+    font-weight: 900;
+    font-family: 'Nunito', sans-serif;
+    cursor: pointer;
+    opacity: 0.6;
+  }
+
+  @media (max-width: 700px) {
+    .panel-right { display: none; }
+    .panel-left { padding: 36px 28px; }
+    .hero { padding: 36px 24px 24px; }
+    .feature-nav { gap: 4px; }
+    .feature-nav-btn { padding: 6px 12px; font-size: 11px; }
+    .cta-section { padding: 32px 28px; }
+    .tagline-strip { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-eyebrow">KidGrid · St. Louis Launch</div>
+  <h1 class="hero-title">The family activity<br/><em>operating system</em></h1>
+  <p class="hero-sub">Discover, register, track &amp; navigate everything your kids do — camps, sports, clubs, free events — year-round, in one place.</p>
+  <div class="hero-pills">
+    <span class="hero-pill accent">Free for families</span>
+    <span class="hero-pill">🏕 Camps pay to list</span>
+    <span class="hero-pill">⚽ Clubs &amp; leagues</span>
+    <span class="hero-pill">🔵 Alexa-enabled</span>
+    <span class="hero-pill">💙 Equity-first</span>
+    <span class="hero-pill">🧠 Neurodivergent-friendly</span>
+  </div>
+</div>
+
+<div class="tagline-strip" id="taglineStrip"></div>
+<div class="feature-nav" id="featureNav"></div>
+
+<div class="feature-panel" id="featurePanel">
+  <div class="panel-deco1" id="deco1"></div>
+  <div class="panel-deco2" id="deco2"></div>
+  <div class="panel-left">
+    <div class="panel-content" id="panelContent"></div>
+  </div>
+  <div class="panel-right">
+    <div class="mini-phone" id="miniPhone"></div>
+  </div>
+</div>
+
+<div class="progress-row" id="progressRow"></div>
+
+<div class="cta-section">
+  <div>
+    <div class="cta-title">KidGrid is coming<br/>to St. Louis first.</div>
+    <div class="cta-sub">Pre-revenue · Prototype ready · Waitlist open · Amazon Alexa Fund applicant</div>
+  </div>
+  <div class="cta-btns">
+    <button class="cta-btn-dark">Join the Waitlist →</button>
+    <button class="cta-btn-outline">View Pitch Deck</button>
+  </div>
+</div>
+
+<script>
+const features = [
+  {
+    id: "discovery", icon: "🔍", label: "Discovery",
+    tagline: "Find the perfect fit", color: "#4ab8e8", bg: "#0d2840",
+    headline: "Camp Zillow for Families",
+    sub: "Search, filter &amp; match activities across camps, sports, rec programs, and free events — all in one place.",
+    bullets: [
+      { icon: "✨", text: "Match Me quiz — age, vibe, budget, weeks needed" },
+      { icon: "🟢", text: "Verified / community / unverified trust badges" },
+      { icon: "👥", text: "Friend overlap — see where your kids' friends are going" },
+      { icon: "🎓", text: "Scholarship availability surfaced on every listing" },
+      { icon: "🌟", text: "Free events, library programs &amp; meal sites included" },
+      { icon: "🎂", text: "Birthday venue finder baked in" },
+    ],
+    stat: { val: "300+", lbl: "STL camps &amp; activities at launch" },
+    phone: (color) => `
+      <div class="phone-status" style="background:#0d2840"><span>9:07</span><span>⚡84%</span></div>
+      <div class="phone-header" style="background:#0d2840">
+        <div class="phone-header-title" style="color:${color}">🔍  Discover</div>
+      </div>
+      <div class="phone-body">
+        ${[
+          {e:"🎪",n:"Circus Arts Intensive",m:"COCA · Ages 7–14 · $385/wk",badge:"✓ Verified",bc:"#4ecba0",tag:"🎓 Scholarship"},
+          {e:"🔬",n:"STEM Explorers Camp",m:"Science Center · Ages 8–12 · $340/wk",badge:"✓ Verified",bc:"#4ecba0",tag:null},
+          {e:"⚽",n:"Maplewood Soccer",m:"Rec League · Ages 5–10 · $175/wk",badge:"✓ Verified",bc:"#4ecba0",tag:null},
+          {e:"📚",n:"Summer Reading Splash",m:"STL Public Library · Free · All ages",badge:"FREE",bc:"#f5c842",tag:null},
+        ].map(c=>`
+          <div class="phone-card">
+            <div class="phone-card-emoji">${c.e}</div>
+            <div style="flex:1;min-width:0">
+              <div class="phone-card-name">${c.n}</div>
+              <div class="phone-card-meta">${c.m}</div>
+              <div class="phone-badges">
+                <span class="phone-badge" style="background:${c.bc}33;color:${c.bc}">${c.badge}</span>
+                ${c.tag?`<span class="phone-badge" style="background:#f5c84233;color:#f5c842">${c.tag}</span>`:''}
+              </div>
+            </div>
+          </div>`).join('')}
+      </div>
+      <div class="phone-nav">${['☀️','🗓','🔍','💳','👥'].map((ic,i)=>`<span class="phone-nav-icon${i===2?' active-nav':''}">${ic}</span>`).join('')}</div>`
+  },
+  {
+    id: "registration", icon: "📋", label: "Registration",
+    tagline: "Never miss a deadline", color: "#c4f135", bg: "#0f2a10",
+    headline: "Your Registration Command Center",
+    sub: "Track every deadline, store child profiles, auto-fill forms, and manage payment plans — all without leaving the app.",
+    bullets: [
+      { icon: "📅", text: "Deadline tracker with 30/7/1-day reminders" },
+      { icon: "⚡", text: "Auto-fill forms from saved child profiles" },
+      { icon: "📤", text: "Doc vault — upload once, share to any camp" },
+      { icon: "💳", text: "Payment plan tracking — deposit, installments, paid in full" },
+      { icon: "⏳", text: "Waitlist alerts when spots open" },
+      { icon: "🎓", text: "Scholarship application docs stored &amp; submitted in-app" },
+    ],
+    stat: { val: "0", lbl: "forms to re-fill once your profile is set" },
+    phone: (color) => `
+      <div class="phone-status" style="background:#0f2a10"><span>9:07</span><span>⚡84%</span></div>
+      <div class="phone-header" style="background:#0f2a10">
+        <div class="phone-header-title" style="color:${color}">📋  Registration Hub</div>
+      </div>
+      <div class="phone-body">
+        <div class="phone-pipeline">
+          ${["✅ Confirmed·1","📬 Applied·1","⏳ Waitlisted·1","👀 Interested·1"].map(p=>`<div class="phone-pipe-chip">${p}</div>`).join('')}
+        </div>
+        ${[
+          {e:"🎪",n:"Circus Arts Intensive",ch:"Emma · Jun 16–20",s:"✅ Confirmed",sc:"#4ecba0",sb:"#0d3320",pay:"$192 due Jun 10",alert:true},
+          {e:"🔬",n:"STEM Explorers",ch:"Emma · Jul 7–11",s:"⏳ Waitlisted",sc:"#f5c842",sb:"#2a2000",pay:"Position #4",alert:false},
+          {e:"⚽",n:"Soccer Academy",ch:"Marcus · Jun 23–27",s:"📬 Applied",sc:"#4ab8e8",sb:"#001a2a",pay:"$175 on accept",alert:false},
+        ].map(c=>`
+          <div class="phone-reg-card">
+            <div class="phone-reg-top">
+              <span class="phone-reg-emoji">${c.e}</span>
+              <div>
+                <div class="phone-reg-name">${c.n}</div>
+                <div class="phone-reg-child">${c.ch}</div>
+              </div>
+              <span class="phone-reg-status" style="background:${c.sb};color:${c.sc}">${c.s}</span>
+            </div>
+            <div class="phone-reg-pay" style="color:${c.alert?'#ff9800':'#666'}">${c.alert?'⚠️ ':''}${c.pay}</div>
+          </div>`).join('')}
+      </div>
+      <div class="phone-nav">${['☀️','🗓','🔍','💳','👥'].map((ic,i)=>`<span class="phone-nav-icon${i===1?' active-nav':''}">${ic}</span>`).join('')}</div>`
+  },
+  {
+    id: "rundown", icon: "☀️", label: "Daily Rundown",
+    tagline: "Your 7am survival guide", color: "#f5c842", bg: "#2a1800",
+    headline: "One Screen. Every Morning.",
+    sub: "Everything your family needs for today — logistics, packing lists, theme days, carpool, free meals, and community events.",
+    bullets: [
+      { icon: "🎪", text: "Today's camp: drop-off time, pickup, location" },
+      { icon: "🎒", text: "Smart packing list — tap to check off each item" },
+      { icon: "🎭", text: "Theme day alerts — costume day, hat day, pajama day" },
+      { icon: "🚗", text: "Who's driving carpool today — one-tap call" },
+      { icon: "🍱", text: "Free meal pickup sites for families with meal assistance" },
+      { icon: "🔵", text: "Alexa reads the rundown directly to your kids" },
+    ],
+    stat: { val: "7am", lbl: "notification timed before you need to pack" },
+    phone: (color) => `
+      <div class="phone-status" style="background:#2a1800"><span>9:07</span><span>⚡84%</span></div>
+      <div class="phone-header" style="background:#2a1800">
+        <div class="phone-header-title" style="color:${color}">☀️  Friday · Jun 13</div>
+        <div class="phone-header-sub">Good morning, Mere ✨</div>
+        <div class="phone-header-meta">☀️ 84°F · Great camp day</div>
+      </div>
+      <div class="phone-body">
+        <div class="phone-rundown-card">
+          <div class="phone-rundown-top">
+            <span class="phone-rundown-emoji">🎪</span>
+            <div>
+              <div class="phone-rundown-name">Circus Arts Intensive</div>
+              <div class="phone-rundown-time" style="color:${color}">8:30 AM → 3:30 PM</div>
+            </div>
+          </div>
+          <div class="phone-rundown-alert" style="background:#2a2000;color:#f5c842">🎭 Costume Day — wear your performer outfit!</div>
+          <div class="phone-pack-items">
+            ${["🥪 Lunch","💧 Water","🎭 Costume","☀️ Sunscreen"].map(p=>`<span class="phone-pack-item">${p}</span>`).join('')}
+          </div>
+          <div class="phone-carpool">🚗 Sarah M. driving</div>
+        </div>
+        <div class="phone-meal-card">
+          <div class="phone-meal-text" style="color:#f5c842">🍱 Free lunch · Mathews-Dickey · 11am–1pm · 0.8mi</div>
+        </div>
+      </div>
+      <div class="phone-nav">${['☀️','🗓','🔍','💳','👥'].map((ic,i)=>`<span class="phone-nav-icon${i===0?' active-nav':''}">${ic}</span>`).join('')}</div>`
+  },
+  {
+    id: "village", icon: "👥", label: "The Village",
+    tagline: "It takes a village — coordinate yours", color: "#ff6b4a", bg: "#280d08",
+    headline: "Everyone Who Helps Raise Your Kids",
+    sub: "Add grandparents, babysitters, co-parents, and nannies. Each gets a tailored view — grandma sees pickup time, camp gets medical forms.",
+    bullets: [
+      { icon: "👵", text: "Add up to 6 village members with custom permission levels" },
+      { icon: "📱", text: "SMS alerts for grandparents who don't check apps" },
+      { icon: "📅", text: "Village calendar sync — everyone's on the same page" },
+      { icon: "👨‍👩‍👧", text: "Co-parenting mode — two primary accounts, shared village" },
+      { icon: "🚗", text: "Carpool coordination — who's driving, who's riding" },
+      { icon: "🔔", text: "Cancellation alerts pushed to entire village instantly" },
+    ],
+    stat: { val: "6", lbl: "village members per family on premium" },
+    phone: (color) => `
+      <div class="phone-status" style="background:#280d08"><span>9:07</span><span>⚡84%</span></div>
+      <div class="phone-header" style="background:#280d08">
+        <div class="phone-header-title" style="color:${color}">👥  Your Village</div>
+      </div>
+      <div class="phone-body">
+        ${[
+          {e:"👵",n:"Grandma Ruth",r:"Pickup · View only",c:"#fce4ec",notif:"SMS ✓"},
+          {e:"🧑",n:"Kevin (Sitter)",r:"Full schedule access",c:"#e3f2fd",notif:"Push ✓"},
+          {e:"👨",n:"Dad",r:"Co-parent · Full access",c:"#e8f5e9",notif:"Push ✓"},
+          {e:"👩‍⚕️",n:"Dr. Patel",r:"Medical forms only",c:"#fff3e0",notif:"Email ✓"},
+        ].map(m=>`
+          <div class="phone-member">
+            <div class="phone-member-av" style="background:${m.c}33">${m.e}</div>
+            <div>
+              <div class="phone-member-name">${m.n}</div>
+              <div class="phone-member-role">${m.r}</div>
+            </div>
+            <div class="phone-member-notif" style="color:${color}">${m.notif}</div>
+          </div>`).join('')}
+      </div>
+      <div class="phone-nav">${['☀️','🗓','🔍','💳','👥'].map((ic,i)=>`<span class="phone-nav-icon${i===4?' active-nav':''}">${ic}</span>`).join('')}</div>`
+  },
+  {
+    id: "clubs", icon: "⚽", label: "Clubs & Leagues",
+    tagline: "For coaches &amp; organizers too", color: "#4ecba0", bg: "#001f1a",
+    headline: "TeamSnap-Style Tools, Built In",
+    sub: "Clubs and leagues get their own organizer portal — roster management, schedules, volunteer sign-ups, and weather alerts pushed to every family.",
+    bullets: [
+      { icon: "📋", text: "Roster management &amp; parent communication" },
+      { icon: "🗓", text: "Practice &amp; game schedules push to parent Daily Rundown" },
+      { icon: "🙋", text: "Volunteer sign-ups — snack duty, carpool, field setup" },
+      { icon: "🌧", text: "Weather cancellation alerts sent to all families instantly" },
+      { icon: "🏆", text: "Tournament publishing — parents get notified automatically" },
+      { icon: "💳", text: "Fee collection &amp; installment tracking built in" },
+    ],
+    stat: { val: "$99", lbl: "per season for a single team" },
+    phone: (color) => `
+      <div class="phone-status" style="background:#001f1a"><span>9:07</span><span>⚡84%</span></div>
+      <div class="phone-header" style="background:#001f1a">
+        <div class="phone-header-title" style="color:${color}">⚽  U7 Tigers · Maplewood Rec</div>
+        <div class="phone-header-sub" style="color:rgba(255,255,255,0.6);font-size:10px">Coach Rivera · 12 players</div>
+        <div class="phone-header-meta" style="color:${color}">Next: Practice Tue 4pm · Maplewood Park</div>
+      </div>
+      <div class="phone-body">
+        <div class="phone-volunteer" style="background:#0d2a1a;border:1px solid ${color}33;color:${color}">🍊 Snack duty this week: Johnson family</div>
+        ${[
+          {n:"Marcus J.",age:6,s:"✓ Confirmed",sc:"#4ecba0",sb:"#e8f5e922"},
+          {n:"Aiden K.",age:6,s:"✓ Confirmed",sc:"#4ecba0",sb:"#e8f5e922"},
+          {n:"Sofia R.",age:7,s:"⏳ Pending",sc:"#f5c842",sb:"#fff8e122"},
+          {n:"Liam T.",age:6,s:"✓ Confirmed",sc:"#4ecba0",sb:"#e8f5e922"},
+        ].map(r=>`
+          <div class="phone-roster-row">
+            <div>
+              <div class="phone-roster-name">${r.n}</div>
+              <div class="phone-roster-age">Age ${r.age}</div>
+            </div>
+            <span class="phone-roster-status" style="background:${r.sb};color:${r.sc}">${r.s}</span>
+          </div>`).join('')}
+      </div>
+      <div class="phone-nav">${['☀️','🗓','🔍','💳','👥'].map((ic,i)=>`<span class="phone-nav-icon">${ic}</span>`).join('')}</div>`
+  },
+  {
+    id: "equity", icon: "💙", label: "Equity Access",
+    tagline: "Every kid deserves a great summer", color: "#a78bfa", bg: "#0d0a28",
+    headline: "Built for Every Family",
+    sub: "KidGrid isn't just for families who can afford premium camps. We surface scholarships, free programming, meal sites, and subsidy resources automatically.",
+    bullets: [
+      { icon: "🎓", text: "Scholarship spots surfaced on every eligible listing" },
+      { icon: "🍱", text: "USDA Summer Meal Program sites in Daily Rundown" },
+      { icon: "🌟", text: "Free library, parks &amp; rec events always visible" },
+      { icon: "🤝", text: "United Way &amp; nonprofit partner integrations" },
+      { icon: "🏫", text: "School district partnerships for Title I family access" },
+      { icon: "💼", text: "Employer benefits model — companies sponsor premium for employees" },
+    ],
+    stat: { val: "7M+", lbl: "kids with ADHD in the US — a core audience" },
+    phone: (color) => `
+      <div class="phone-status" style="background:#0d0a28"><span>9:07</span><span>⚡84%</span></div>
+      <div class="phone-header" style="background:#0d0a28">
+        <div class="phone-header-title" style="color:${color}">💙  Resources for Your Family</div>
+      </div>
+      <div class="phone-body">
+        ${[
+          {e:"🎓",n:"3 camps near you have scholarships",m:"Deadline: May 1 · Apply in-app",badge:"Aid Available"},
+          {e:"🍱",n:"Free Lunch · Mathews-Dickey",m:"11am–1pm · 0.8mi · Kids 18 &amp; under",badge:"FREE"},
+          {e:"📚",n:"LEGO Robotics Drop-In",m:"Schlafly Library · Tue &amp; Thu · Free",badge:"FREE"},
+          {e:"🏊",n:"Free Swim · Maplewood Pool",m:"Mon/Wed/Fri · 1–3pm · Under 12",badge:"FREE"},
+        ].map(r=>`
+          <div class="phone-resource">
+            <div class="phone-resource-emoji">${r.e}</div>
+            <div style="flex:1;min-width:0">
+              <div class="phone-resource-name">${r.n}</div>
+              <div class="phone-resource-meta">${r.m}</div>
+            </div>
+            <span class="phone-resource-badge" style="background:${color}33;color:${color}">${r.badge}</span>
+          </div>`).join('')}
+      </div>
+      <div class="phone-nav">${['☀️','🗓','🔍','💳','👥'].map((ic)=>`<span class="phone-nav-icon">${ic}</span>`).join('')}</div>`
+  },
+  {
+    id: "premium", icon: "⭐", label: "Premium",
+    tagline: "For the whole village", color: "#f5c842", bg: "#1a1400",
+    headline: "KidGrid Premium — $8–10/mo",
+    sub: "Unlock the full village experience. Everything your family needs to coordinate year-round, across every kid, every activity, every helper.",
+    bullets: [
+      { icon: "👥", text: "Village Access — grandparents, sitters, co-parents (up to 6)" },
+      { icon: "📁", text: "Enhanced doc vault with permission-based sharing" },
+      { icon: "📅", text: "Multi-child calendar overlay + export to all calendars" },
+      { icon: "💳", text: "Payment ledger, FSA categorization &amp; tax export" },
+      { icon: "🧠", text: "Neurodivergent household mode — simplified, chunked, calmer" },
+      { icon: "📊", text: "Year-in-review — everything your family did, exportable" },
+    ],
+    stat: { val: "$79", lbl: "per year — locks in retention" },
+    phone: (color) => `
+      <div class="phone-status" style="background:#1a1400"><span>9:07</span><span>⚡84%</span></div>
+      <div class="phone-header" style="background:#1a1400">
+        <div class="phone-header-title" style="color:${color}">⭐  KidGrid Premium</div>
+      </div>
+      <div class="phone-body">
+        ${[
+          {n:"KidGrid Free",p:"$0",d:"Discovery, registration &amp; daily rundown",bg:"#1e1e1e",tc:"white",pc:"#888",highlight:false},
+          {n:"KidGrid Premium",p:"$8/mo",d:"Village access + all premium features",bg:color,tc:"#0a1628",pc:"#0a1628",highlight:true},
+          {n:"KidGrid Family+",p:"$12/mo",d:"Co-parenting · Two primary accounts",bg:"#f5c84233",tc:"#f5c842",pc:"#f5c842",highlight:false},
+        ].map(pl=>`
+          <div class="phone-plan" style="background:${pl.bg};${pl.highlight?'':'border:1px solid #2a2a2a'}">
+            <div class="phone-plan-top">
+              <div>
+                <div class="phone-plan-name" style="color:${pl.tc}">${pl.n}</div>
+                <div class="phone-plan-desc" style="color:${pl.highlight?pl.tc+'99':'#888'}">${pl.d}</div>
+              </div>
+              <div class="phone-plan-price" style="color:${pl.pc}">${pl.p}</div>
+            </div>
+          </div>`).join('')}
+      </div>
+      <div class="phone-nav">${['☀️','🗓','🔍','💳','👥'].map((ic)=>`<span class="phone-nav-icon">${ic}</span>`).join('')}</div>`
+  },
+  {
+    id: "revenue", icon: "📈", label: "Business Model",
+    tagline: "Free for families. Paid by the ecosystem.", color: "#ff6b4a", bg: "#1f0808",
+    headline: "A Platform That Pays for Itself",
+    sub: "Families get KidGrid free. Revenue comes from camps, clubs, venues, districts, and employers — all of whom get more value than they pay for.",
+    bullets: [
+      { icon: "🏕", text: "Camp listings: $299–1,499/yr (verified + featured tiers)" },
+      { icon: "⚽", text: "Club/league tools: $99–999/season" },
+      { icon: "🎂", text: "Birthday venue listings: $299–1,200/yr" },
+      { icon: "🏫", text: "School district partnerships: flat annual fee" },
+      { icon: "💼", text: "Employer benefits: $15–25/employee/yr" },
+      { icon: "⭐", text: "Premium subscriptions: $8–12/mo per family" },
+    ],
+    stat: { val: "$144K", lbl: "STL Year 1 conservative ARR" },
+    phone: (color) => `
+      <div class="phone-status" style="background:#1f0808"><span>9:07</span><span>⚡84%</span></div>
+      <div class="phone-header" style="background:#1f0808">
+        <div class="phone-header-title" style="color:${color}">📈  STL Revenue Model</div>
+      </div>
+      <div class="phone-body">
+        ${[
+          {label:"Camp listings",val:31,pct:31,c:"#ff6b4a"},
+          {label:"Club subscriptions",val:25,pct:25,c:"#4ecba0"},
+          {label:"Premium families",val:48,pct:48,c:"#f5c842"},
+          {label:"Birthday venues",val:15,pct:15,c:"#a78bfa"},
+          {label:"Districts + sponsors",val:25,pct:25,c:"#4ab8e8"},
+        ].map(b=>`
+          <div class="phone-bar-row">
+            <div class="phone-bar-header">
+              <span class="phone-bar-label">${b.label}</span>
+              <span class="phone-bar-val" style="color:${b.c}">$${b.val}K</span>
+            </div>
+            <div class="phone-bar-track">
+              <div class="phone-bar-fill" style="width:${b.pct}%;background:${b.c}"></div>
+            </div>
+          </div>`).join('')}
+      </div>
+      <div class="phone-nav">${['☀️','🗓','🔍','💳','👥'].map((ic)=>`<span class="phone-nav-icon">${ic}</span>`).join('')}</div>`
+  },
+];
+
+let active = 0;
+let checkedBullets = {};
+let autoTimer = null;
+
+function renderTaglineStrip() {
+  const strip = document.getElementById('taglineStrip');
+  strip.innerHTML = features.map((f, i) => `
+    <div class="tagline-item${i===active?' active':''}"
+         style="--item-color:${f.color}"
+         onclick="goTo(${i})">
+      <div class="tagline-icon">${f.icon}</div>
+      <div class="tagline-label">${f.label}</div>
+    </div>`).join('');
+}
+
+function renderFeatureNav() {
+  const nav = document.getElementById('featureNav');
+  nav.innerHTML = features.map((f, i) => `
+    <button class="feature-nav-btn${i===active?' active':''}"
+            style="${i===active?`background:${f.color}`:''};"
+            onclick="goTo(${i})">
+      ${f.icon} ${f.label}
+    </button>`).join('');
+}
+
+function renderPanel() {
+  const f = features[active];
+  const panel = document.getElementById('featurePanel');
+  panel.style.background = f.bg;
+
+  document.getElementById('deco1').style.background = f.color + '08';
+  document.getElementById('deco2').style.background = f.color + '05';
+
+  const content = document.getElementById('panelContent');
+  content.innerHTML = `
+    <div class="feature-eyebrow" style="color:${f.color}">${f.icon} ${f.label} · ${f.tagline}</div>
+    <h2 class="feature-headline">${f.headline}</h2>
+    <p class="feature-sub">${f.sub}</p>
+    <div class="bullets">
+      ${f.bullets.map((b, i) => {
+        const key = `${f.id}-${i}`;
+        const checked = !!checkedBullets[key];
+        return `
+          <div class="bullet${checked?' checked':''}" onclick="toggleBullet('${key}', this, '${f.color}')">
+            <div class="bullet-icon" style="background:${checked?f.color+'33':'rgba(255,255,255,0.08)'}">
+              ${checked ? '✓' : b.icon}
+            </div>
+            ${b.text}
+          </div>`;
+      }).join('')}
+    </div>
+    <div class="stat-block">
+      <div class="stat-val" style="color:${f.color}">${f.stat.val}</div>
+      <div class="stat-lbl">${f.stat.lbl}</div>
+    </div>`;
+
+  // Trigger re-animation
+  content.style.animation = 'none';
+  content.offsetHeight; // reflow
+  content.style.animation = '';
+
+  // Phone
+  const phone = document.getElementById('miniPhone');
+  phone.style.boxShadow = `0 0 0 2px ${f.color}, 0 24px 60px rgba(0,0,0,0.5)`;
+  phone.innerHTML = f.phone(f.color);
+}
+
+function renderProgress() {
+  const row = document.getElementById('progressRow');
+  row.innerHTML = features.map((f, i) => `
+    <div class="progress-dot${i===active?' active':''}"
+         style="${i===active?`background:${f.color}`:'background:rgba(255,255,255,0.2)'}"
+         onclick="goTo(${i})"></div>`).join('');
+}
+
+function render() {
+  renderTaglineStrip();
+  renderFeatureNav();
+  renderPanel();
+  renderProgress();
+}
+
+function goTo(i) {
+  active = i;
+  render();
+  clearInterval(autoTimer);
+  startAuto();
+}
+
+function toggleBullet(key, el, color) {
+  checkedBullets[key] = !checkedBullets[key];
+  const checked = checkedBullets[key];
+  el.classList.toggle('checked', checked);
+  const icon = el.querySelector('.bullet-icon');
+  if (icon) {
+    icon.style.background = checked ? color + '33' : 'rgba(255,255,255,0.08)';
+    icon.textContent = checked ? '✓' : el.dataset.icon || '';
+  }
+}
+
+function startAuto() {
+  autoTimer = setInterval(() => {
+    active = (active + 1) % features.length;
+    render();
+  }, 4000);
+}
+
+render();
+startAuto();
+</script>
+</body>
+</html>
